@@ -35,8 +35,8 @@ function shuffle(arr) {
 }
 
 // Asynchronously fetch 3 unique Pokémon and return 6 card objects (each pair duplicated)
-async function loadPokemon() {
-  const ids = getUniqueRandomNumbers(3, 1025); // Select 3 random Pokémon IDs
+async function loadPokemon(pairCount) {
+  const ids = getUniqueRandomNumbers(pairCount, 1025); // Select 3 random Pokémon IDs
   let cards = [];
   let index = 0;
 
@@ -62,32 +62,41 @@ app.get('/', async (req, res) => {
 });
 
 // Jumpt to the level of difficulties
-app.get('/play/:level', async (req, res)=>{
-          const level = req.params.level;
-          let counter=60;
-          
-          if(level=='medium') counter = 40;
-          if(level=='hard') counter = 20;
+app.get('/play/:level', async (req, res) => {
+  const level = req.params.level;
+  let counter = 60;
+  let pairs = 3;
 
-          const pokermon = await loadPokemon();     // Get card data
-          req.session.level=level;
-          req.session.pokermon=pokermon;
-          req.session.counter=counter;
-          res.render('index', {level, pokermon, counter}); // Pass data to EJS template
-})
+  if (level === 'medium') {
+    counter = 30;
+    pairs = 3;
+  }
+  if (level === 'hard') {
+    counter = 20;
+    pairs = 4;
+  }
+
+  const pokermon = await loadPokemon(pairs); 
+  req.session.pokermon = pokermon;
+  req.session.counter = counter;
+  req.session.pairs=pairs;
+  req.session.level=level;
+  res.render('index', { pokermon, counter, level, pairs });
+});
 
 app.get('/restart', async (req,res)=>{
           const pokermon = req.session.pokermon;
           const counter = req.session.counter;
           const level = req.session.level;
-          if(!pokermon || !counter)
+          const pairs = req.session.pairs
+          if(!pokermon || !counter || !level || !pairs)
           {
                     res.redirect('/play/easy');
                     return;
           }
 
           shuffle(pokermon);
-          res.render('index', {level, pokermon, counter});
+          res.render('index', {level, pokermon, counter, pairs});
 });
 
 // Start the server

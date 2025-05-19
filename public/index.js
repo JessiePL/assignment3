@@ -1,9 +1,11 @@
 const matchedDisplay = document.getElementById('matchedPairs');
 const clicksDisplay = document.getElementById('clickCount');
 const remainingDisplay = document.getElementById('remainingPairs');
+const totalPairs = document.getElementById('totalPairs')
+const expectedPairs = parseInt(totalPairs.textContent);
 let match = 0;
 let clicks = 0;
-let remaining = 3;
+let remaining = expectedPairs;
 
 
 function setup() {
@@ -125,7 +127,7 @@ function setupCountdown(){
         loseRemainingPairs.textContent=`${remainPairs}`;
         loseModal.show();
       }
-      else if(matchedNumber===3)
+      else if(matchedNumber===expectedPairs)
         {
           clearInterval(countdown);
           const winModal = new bootstrap.Modal(document.getElementById('gamewin'));
