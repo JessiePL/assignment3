@@ -99,6 +99,10 @@ app.get('/restart', async (req,res)=>{
           res.render('index', {level, pokermon, counter, pairs});
 });
 
+  app.get("*", (req, res) => {
+    res.render("404",{currentPath:"/doesnotexist", navLinks});
+  });
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
