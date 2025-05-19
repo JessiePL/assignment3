@@ -71,14 +71,17 @@ function setup() {
 $(document).ready(setup)
 
 document.addEventListener('DOMContentLoaded', () => {
-  cardsShowUp();
   bindStartPopup();
   bindDifficultyButtons();
-  setTimeout(()=>{
-    setupCountdown();
-  }, 1000);
-  restartBtn();
-  setUpTheme();
+  if(document.getElementById('totalPairs'))
+  {
+      cardsShowUp();
+      setTimeout(()=>{
+        setupCountdown();
+      }, 1000);
+      restartBtn();
+      setUpTheme();
+  }
 });
 
 function bindStartPopup(){
@@ -164,15 +167,19 @@ function setUpTheme(){
   const lightBtn = document.getElementById('lightTheme');
   const darkBtn= document.getElementById('darkTheme');
 
-  lightBtn.addEventListener('click', ()=>{
+  if(lightBtn){
+    lightBtn.addEventListener('click', ()=>{
     document.documentElement.setAttribute('data-theme', 'light');
     localStorage.setItem('theme', 'light');
   })
+  }
 
-  darkBtn.addEventListener('click', ()=>{
+  if(darkBtn){
+    darkBtn.addEventListener('click', ()=>{
     document.documentElement.setAttribute('data-theme', 'dark');
     localStorage.setItem('theme', 'dark');
   })
+  }
 
   const savedTheme = localStorage.getItem('theme');
   if(savedTheme){
