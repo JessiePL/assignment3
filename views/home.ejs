@@ -1,0 +1,40 @@
+<%- include("header.ejs") %>
+
+<div class="welcome">
+<div class="container text-center mt-4">
+      <h1 class="title-brush">
+       Welcome to the
+      </h1>
+
+      <div class="pokemon-title-wrapper">
+        <img src="/back.webp" alt="pokeball" class="pokemon-bg">
+        <div class="pokemon-text">Pokémon</div>
+      </div>
+
+      <h1 class="title-brush">
+        Memory Game!
+      </h1>
+
+      <p class="option">Select a difficulty level to begin:</p>
+      <button id="startBtn" class="btn btn-primary btn-lg">Start</button>
+</div>
+</div>
+
+
+<!-- Pop Up window -->
+<div id="difficultyPopup" class="modal" tabindex="-1">
+       <div class="modal-dialog modal-dialog-centered">
+                 <div class="modal-content">
+                           <div class="modal-header">
+                                     <h5 class="modal-title">Select Difficulty</h5>
+                           </div>
+                           <div class="modal-body text-center">
+                                     <button class = "btn btn-outline-success m-2 difficulty-option" data-level="easy">Easy</button>
+                                     <button class = "btn btn-outline-warning m-2 difficulty-option" data-level="medium">Medium</button>
+                                     <button class = "btn btn-outline-danger m-2 difficulty-option" data-level="hard">Hard</button>
+                           </div>
+                 </div>
+       </div>
+</div>
+
+<%- include("footer.ejs") %>
